@@ -4,6 +4,8 @@ from bs4 import BeautifulSoup
 # cron job for e.g. 07:00 every Sat. and Sun.
 # 0 7 * * 0,6 /Library/Frameworks/Python.framework/Versions/3.9/bin/python3 /Users/oscarchao/project/python/get_movie_list/get_movie_list.py
 
+channel_map= {'HBO電影台':'CH65','東森洋片台':'CH66','AXN動作台':'CH67','FOX MOVIES':'CH69','Cinemax':'CH70','好萊塢電影台':'CH68'}
+
 # 開眼電影網 - 西片
 movie_url = 'http://tv.atmovies.com.tw/tv/attv.cfm?action=todaytime'
 r = requests.get(movie_url)
@@ -22,8 +24,8 @@ for tag2100 in tags:
     channel_tag = tag2100.find_parent("table", class_="at9").find_previous_sibling("a")
     channel_name = channel_tag.string
     channel_num = channel_tag.find_previous_sibling("a").attrs['name']
-    #print(channel_num, channel_name, movie_title)
-    result.append(f"{channel_num} {channel_name} {movie_title}")
+    # print(channel_map[channel_name], channel_name, movie_title)
+    result.append(f"{channel_map[channel_name]} {channel_name} {movie_title}")
 
 
 # Line Notify
